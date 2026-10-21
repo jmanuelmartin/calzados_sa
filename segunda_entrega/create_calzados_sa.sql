@@ -1,3 +1,4 @@
+DROP DATABASE IF EXISTS calzados_sa;
 CREATE DATABASE calzados_sa;
 USE calzados_sa;
 
