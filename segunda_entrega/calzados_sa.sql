@@ -21,8 +21,12 @@ CREATE TABLE Tiene (
 	cantidad INT,
 
 	CONSTRAINT PKTiene PRIMARY KEY (codigo_zapato, numero_zapato),
-	CONSTRAINT FKCodigoZapato_Tiene FOREIGN KEY (codigo_zapato) REFERENCES Zapato(codigo) ON DELETE RESTRICT,
-	CONSTRAINT FKNumeroZapato_Tiene FOREIGN KEY (numero_zapato) REFERENCES Numero(numero) ON DELETE RESTRICT
+	CONSTRAINT FKCodigoZapato_Tiene FOREIGN KEY (codigo_zapato) REFERENCES Zapato(codigo)
+	ON DELETE RESTRICT
+	ON UPDATE CASCADE,
+	CONSTRAINT FKNumeroZapato_Tiene FOREIGN KEY (numero_zapato) REFERENCES Numero(numero)
+	ON DELETE RESTRICT
+	ON UPDATE CASCADE
 );
 
 CREATE TABLE Proveedor (
@@ -37,7 +41,9 @@ CREATE TABLE PCelular (
 	celular VARCHAR(50),
 
 	CONSTRAINT PKPCelular PRIMARY KEY (cuit, celular),
-	CONSTRAINT FKCuit_PCelular FOREIGN KEY (cuit) REFERENCES Proveedor ON DELETE CASCADE
+	CONSTRAINT FKCuit_PCelular FOREIGN KEY (cuit) REFERENCES Proveedor
+	ON DELETE CASCADE
+	ON UPDATE CASCADE
 );
 
 CREATE TABLE Provee (
@@ -45,8 +51,12 @@ CREATE TABLE Provee (
 	cuit_proveedor VARCHAR(50) NOT NULL,
 
 	CONSTRAINT PKProvee PRIMARY KEY (codigo_zapato, cuit_proveedor),
-	CONSTRAINT FKCodigoZapato_Provee FOREIGN KEY (codigo_zapato) REFERENCES Zapato(codigo) ON DELETE CASCADE,
-	CONSTRAINT FKCuitProveedor_Provee FOREIGN KEY (cuit_proveedor) REFERENCES Proveedor(cuit) ON DELETE CASCADE
+	CONSTRAINT FKCodigoZapato_Provee FOREIGN KEY (codigo_zapato) REFERENCES Zapato(codigo)
+	ON DELETE CASCADE
+	ON UPDATE CASCADE,
+	CONSTRAINT FKCuitProveedor_Provee FOREIGN KEY (cuit_proveedor) REFERENCES Proveedor(cuit)
+	ON DELETE CASCADE
+	ON UPDATE CASCADE
 );
 
 CREATE TABLE Persona (
@@ -60,21 +70,27 @@ CREATE TABLE Persona (
 CREATE TABLE Cliente (
 	dni VARCHAR(50) PRIMARY KEY,
 
-	CONSTRAINT PKDni_Cliente FOREIGN KEY (dni) REFERENCES Persona ON DELETE CASCADE
+	CONSTRAINT PKDni_Cliente FOREIGN KEY (dni) REFERENCES Persona
+	ON DELETE CASCADE
+	ON UPDATE CASCADE
 );
 
 CREATE TABLE Cliente_Minorista (
 	dni VARCHAR(50) PRIMARY KEY,
 	fecha_nacimiento DATE,
 
-	CONSTRAINT PKDni_ClienteMinorista FOREIGN KEY (dni) REFERENCES Cliente ON DELETE CASCADE
+	CONSTRAINT PKDni_ClienteMinorista FOREIGN KEY (dni) REFERENCES Cliente
+	ON DELETE CASCADE
+	ON UPDATE CASCADE
 );
 
 CREATE TABLE Cliente_Mayorista (
 	dni VARCHAR(50) PRIMARY KEY,
 	descuento FLOAT,
 
-	CONSTRAINT PKDni FOREIGN KEY (dni) REFERENCES Cliente ON DELETE CASCADE,
+	CONSTRAINT PKDni FOREIGN KEY (dni) REFERENCES Cliente
+	ON DELETE CASCADE
+	ON UPDATE CASCADE,
 	CONSTRAINT descuento_cero_CM CHECK (descuento >= 0.00),
 	CONSTRAINT descuento_100_CM CHECK (descuento <= 100.00)
 );
@@ -83,7 +99,9 @@ CREATE TABLE Vendedor (
 	dni VARCHAR(50) PRIMARY KEY,
 	numero INT AUTO_INCREMENT UNIQUE,
 
-	CONSTRAINT PKDni_Vendedor FOREIGN KEY (dni) REFERENCES Persona ON DELETE CASCADE
+	CONSTRAINT PKDni_Vendedor FOREIGN KEY (dni) REFERENCES Persona
+	ON DELETE CASCADE
+	ON UPDATE CASCADE
 );
 
 CREATE TABLE Fecha (
@@ -97,8 +115,12 @@ CREATE TABLE Trabaja (
 	horario_salida TIME,
 
 	CONSTRAINT PKTrabaja PRIMARY KEY (dni_vendedor, dia),
-	CONSTRAINT FKDniVendedor_Trabaja FOREIGN KEY (dni_vendedor) REFERENCES Vendedor(dni) ON DELETE CASCADE,
-	CONSTRAINT FKDia_Trabaja FOREIGN KEY (dia) REFERENCES Fecha(dia) ON DELETE SET NULL
+	CONSTRAINT FKDniVendedor_Trabaja FOREIGN KEY (dni_vendedor) REFERENCES Vendedor(dni)
+	ON DELETE CASCADE
+	ON UPDATE CASCADE,
+	CONSTRAINT FKDia_Trabaja FOREIGN KEY (dia) REFERENCES Fecha(dia)
+	ON DELETE SET NULL
+	ON UPDATE RESTRICT
 );
 
 CREATE TABLE Franco (
@@ -107,7 +129,9 @@ CREATE TABLE Franco (
 	observaciones VARCHAR(150),
 	dni_vendedor VARCHAR(50),
 
-	CONSTRAINT FKDniVendedor_Franco FOREIGN KEY (dni_vendedor) REFERENCES Vendedor(dni) ON DELETE SET NULL
+	CONSTRAINT FKDniVendedor_Franco FOREIGN KEY (dni_vendedor) REFERENCES Vendedor(dni)
+	ON DELETE SET NULL
+	ON UPDATE CASCADE
 );
 
 CREATE TABLE Factura (
@@ -118,8 +142,12 @@ CREATE TABLE Factura (
 	dni_vendedor VARCHAR(50),
 	descuento FLOAT,
 
-	CONSTRAINT FKCliente_Factura FOREIGN KEY (dni_cliente) REFERENCES Cliente(dni) ON DELETE RESTRICT,
-	CONSTRAINT FKDniVendedor_Factura FOREIGN KEY (dni_vendedor) REFERENCES Vendedor(dni) ON DELETE SET NULL,
+	CONSTRAINT FKCliente_Factura FOREIGN KEY (dni_cliente) REFERENCES Cliente(dni)
+	ON DELETE RESTRICT
+	ON UPDATE CASCADE,
+	CONSTRAINT FKDniVendedor_Factura FOREIGN KEY (dni_vendedor) REFERENCES Vendedor(dni)
+	ON DELETE SET NULL
+	ON UPDATE CASCADE,
 	CONSTRAINT descuento_cero_factura CHECK (descuento >= 0.00),
 	CONSTRAINT descuento_100_factura CHECK (descuento <= 100.00)
 );
@@ -132,8 +160,12 @@ CREATE TABLE Pertenece (
 	precio_venta FLOAT,
 
 	CONSTRAINT PKPertenece PRIMARY KEY (codigo_zapato, numero_zapato, numero_factura),
-	CONSTRAINT FKTiene_Pertenece FOREIGN KEY (codigo_zapato, numero_zapato) REFERENCES Tiene(codigo_zapato, numero_zapato) ON DELETE RESTRICT,
-	CONSTRAINT FKNumeroFactura_Pertenece FOREIGN KEY (numero_factura) REFERENCES Factura(numero) ON DELETE CASCADE
+	CONSTRAINT FKTiene_Pertenece FOREIGN KEY (codigo_zapato, numero_zapato) REFERENCES Tiene(codigo_zapato, numero_zapato)
+	ON DELETE RESTRICT
+	ON UPDATE CASCADE,
+	CONSTRAINT FKNumeroFactura_Pertenece FOREIGN KEY (numero_factura) REFERENCES Factura(numero)
+	ON DELETE CASCADE
+	ON UPDATE CASCADE
 );
 
 CREATE TABLE Auditoria (
