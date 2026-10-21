@@ -20,7 +20,7 @@ CREATE TABLE Tiene (
 	numero_zapato INT NOT NULL,
 	cantidad INT,
 
-	CONSTRAINT PKTiene PRIMARY KEY (codigo_zapato, numero_zapato),
+	PRIMARY KEY (codigo_zapato, numero_zapato),
 	CONSTRAINT FKCodigoZapato_Tiene FOREIGN KEY (codigo_zapato) REFERENCES Zapato(codigo),
 	CONSTRAINT FKNumeroZapato_Tiene FOREIGN KEY (numero_zapato) REFERENCES Numero(numero)
 );
@@ -36,7 +36,7 @@ CREATE TABLE PCelular (
 	cuit VARCHAR(50),
 	celular VARCHAR(50),
 
-	CONSTRAINT PKPCelular PRIMARY KEY (cuit, celular),
+	PRIMARY KEY (cuit, celular),
 	CONSTRAINT FKCuit_PCelular FOREIGN KEY (cuit) REFERENCES Proveedor
 );
 
@@ -44,7 +44,7 @@ CREATE TABLE Provee (
 	codigo_zapato INT NOT NULL,
 	cuit_proveedor VARCHAR(50) NOT NULL,
 
-	CONSTRAINT PKProvee PRIMARY KEY (codigo_zapato, cuit_proveedor),
+	PRIMARY KEY (codigo_zapato, cuit_proveedor),
 	CONSTRAINT FKCodigoZapato_Provee FOREIGN KEY (codigo_zapato) REFERENCES Zapato(codigo),
 	CONSTRAINT FKCuitProveedor_Provee FOREIGN KEY (cuit_proveedor) REFERENCES Proveedor(cuit)
 );
@@ -96,7 +96,7 @@ CREATE TABLE Trabaja (
 	horario_entrada TIME,
 	horario_salida TIME,
 
-	CONSTRAINT PKTrabaja PRIMARY KEY (dni_vendedor, dia),
+	PRIMARY KEY (dni_vendedor, dia),
 	CONSTRAINT FKDniVendedor_Trabaja FOREIGN KEY (dni_vendedor) REFERENCES Vendedor(dni),
 	CONSTRAINT FKDia_Trabaja FOREIGN KEY (dia) REFERENCES Fecha(dia)
 );
@@ -131,7 +131,7 @@ CREATE TABLE Pertenece (
 	cantidad INT,
 	precio_venta FLOAT,
 
-	CONSTRAINT PKPertenece PRIMARY KEY (codigo_zapato, numero_zapato, numero_factura),
+	PRIMARY KEY (codigo_zapato, numero_zapato, numero_factura),
 	CONSTRAINT FKTiene_Pertenece FOREIGN KEY (codigo_zapato, numero_zapato) REFERENCES Tiene(codigo_zapato, numero_zapato),
 	CONSTRAINT FKNumeroFactura_Pertenece FOREIGN KEY (numero_factura) REFERENCES Factura(numero)
 );
