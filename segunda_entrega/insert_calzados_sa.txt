@@ -79,5 +79,5 @@ INSERT INTO Factura (numero, fecha, monto, dni_cliente, dni_vendedor, descuento)
 (2, '2026-10-20', 144500.00, '47911017', '47611567', 15);
 
 INSERT INTO Pertenece (codigo_zapato, numero_zapato, numero_factura, cantidad, precio_venta) VALUES
-(1, 40, 1, 1, 45000.50),
-(2, 39, 2, 2, 85000.00);
+(1, 39, 1, 1, 45000.50),
+(2, 40, 2, 2, 85000.00);
