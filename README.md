@@ -63,3 +63,15 @@ WHERE z.codigo NOT IN (
     FROM Pertenece p
 );
 ```
+
+##### 6.e. Listar los proveedores que proveen más de un modelo de zapatos.
+
+```sql
+USE calzados_sa;
+
+SELECT p.cuit, p.razon_social, COUNT(provee.cuit_proveedor) as modelos
+FROM Proveedor p
+INNER JOIN Provee provee ON p.cuit = provee.cuit_proveedor
+GROUP BY p.cuit, p.razon_social
+HAVING COUNT(provee.cuit_proveedor) > 1;
+```
