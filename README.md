@@ -75,3 +75,15 @@ INNER JOIN Provee provee ON p.cuit = provee.cuit_proveedor
 GROUP BY p.cuit, p.razon_social
 HAVING COUNT(provee.cuit_proveedor) > 1;
 ```
+
+##### 6.f. Listar el stock total por cada modelo de forma creciente.
+
+```sql
+USE calzados_sa;
+
+SELECT z.codigo, z.modelo, SUM(t.cantidad) AS stock
+FROM Zapato z
+LEFT JOIN Tiene t ON z.codigo = t.codigo_zapato
+GROUP BY z.codigo, z.modelo
+ORDER BY stock ASC;
+```
