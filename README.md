@@ -50,3 +50,16 @@ WHERE p.dni NOT IN (
     WHERE f.fecha >= '2026-01-01' AND f.fecha < '2026-02-01'
 );
 ```
+
+##### 6.d. Listar los modelos y colores de zapatos que nunca han sido vendidos.
+
+```sql
+USE calzados_sa;
+
+SELECT z.modelo, z.color
+FROM Zapato z
+WHERE z.codigo NOT IN (
+    SELECT p.codigo_zapato
+    FROM Pertenece p
+);
+```
