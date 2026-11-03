@@ -35,3 +35,18 @@ FROM Factura f
 WHERE f.fecha >= '2025-01-01' AND f.fecha < '2026-01-01'
 GROUP BY f.dni_vendedor;
 ```
+
+##### 6.c. Apellido y nombre de los vendedores que no han tenido francos en enero de 2026.
+
+```sql
+USE calzados_sa;
+
+SELECT p.apellido, p.nombre
+FROM Persona p
+INNER JOIN Vendedor v ON p.dni = v.dni
+WHERE p.dni NOT IN (
+	SELECT f.dni_vendedor
+    FROM Franco f
+    WHERE f.fecha >= '2026-01-01' AND f.fecha < '2026-02-01'
+);
+```
