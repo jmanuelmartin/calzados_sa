@@ -6,14 +6,14 @@ public class CalzadosSA {
   public static void main(String[] args) {
 
     try {
+      // Configuración de variables para la conexión a la base de datos MySQL
       String driver = "com.mysql.cj.jdbc.Driver";
       String url = "jdbc:mysql://localhost:3306/calzados_sa?serverTimezone=UTC";
       String username = "root";
       String password = "clave";
 
-      // Load database driver if not already loaded.
+      // Cargar el driver de la base de datos y establecer la conexión
       Class.forName(driver);
-      // Establish network connection to database.
       Connection connection = DriverManager.getConnection(url, username, password);
 
       Scanner input = new Scanner(System.in);
@@ -39,8 +39,8 @@ public class CalzadosSA {
 
         String query = "";
         switch (opcion) {
+          // Opción 1: Solicitar e insertar en la BBDD los datos de un proveedor
           case 1:
-            // Insertar datos del proveedor
             System.out.print("1. Ingrese su CUIT: ");
             String cuit = input.nextLine();
 
@@ -53,14 +53,17 @@ public class CalzadosSA {
             System.out.print("\n4. Ingrese su teléfono fijo: ");
             String telefono_fijo = input.nextLine();
 
+            // Usamos el comodín "?" para evitar SQL Injection
             query = "INSERT INTO Proveedor (cuit, razon_social, direccion, telefono_fijo)" +
                 "VALUES (?, ?, ?, ?)";
 
+            // Preparamos la query con los valores del proveedor
             try (PreparedStatement statement = connection.prepareStatement(query)) {
               statement.setString(1, cuit);
               statement.setString(2, razon_social);
               statement.setString(3, direccion);
               statement.setString(4, telefono_fijo);
+              // executeUpdate(): envía la query y devuelve la cantidad de filas afectadas
               int filas = statement.executeUpdate();
 
               if (filas > 0) {
@@ -76,6 +79,7 @@ public class CalzadosSA {
             }
 
             break;
+          // Opción 2: Eliminar un proveedor específico a través de su clave primaria (cuit)
           case 2:
             System.out.print("1. Ingrese el CUIT del proveedor a eliminar: ");
             String cuitD = input.nextLine();
@@ -99,14 +103,15 @@ public class CalzadosSA {
             }
 
             break;
+          // Opción 3: Listar todos los registros de la tabla Proveedor
           case 3:
-            // listar
             query = "SELECT * FROM Proveedor;";
             PreparedStatement statement = connection.prepareStatement(query);
             ResultSet resultSet = statement.executeQuery();
             Thread.sleep(1000);
             limpiarPantalla();
             System.out.println("\n//-------- Consulta de Proveedores --------//");
+            // Iteramos sobre los resultados devueltos por la base de datos
             while (resultSet.next()) {
               System.out.println();
               System.out.print("+ CUIT: " + resultSet.getString("cuit"));
@@ -142,6 +147,7 @@ public class CalzadosSA {
         }
       }
 
+    // Bloque catch para capturar y mostrar posibles errores de SQL
     } catch (ClassNotFoundException cnfe) {
       System.err.println("Error loading driver: " + cnfe);
       cnfe.printStackTrace();
@@ -154,6 +160,7 @@ public class CalzadosSA {
     }
   }
 
+  // Método auxiliar para limpiar la terminal
   public static void limpiarPantalla() {
     try {
       if (System.getProperty("os.name").toLowerCase().contains("win")) {
