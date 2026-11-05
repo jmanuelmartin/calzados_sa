@@ -5,7 +5,8 @@ VALUES
 	('Zapatillas Running', 'Rojo', 45000.00),
 	('Botas de Cuero', 'Marrón', 85000.00),
 	('Zapatos de vestir', 'Negro', 72000.00),
-	('Sandalias', 'Verde', 25000.00);
+	('Sandalias', 'Verde', 25000.00),
+	('Crocs', 'Rojo', 10000.00);
 
 INSERT INTO Numero (numero)
 VALUES
@@ -21,7 +22,8 @@ VALUES
 	(2, 40, 20),
 	(1, 41, 10),
 	(3, 42, 5),
-	(4, 38, 30);
+	(4, 38, 30),
+	(5, 39, 10);
 
 INSERT INTO Proveedor (cuit, razon_social, direccion, telefono_fijo) VALUES
 ('30-12345678-9', 'Tate Express', 'Mitre 67, Rio Cuarto', '011-4444-5555'),
@@ -35,7 +37,9 @@ INSERT INTO PCelular (cuit, celular) VALUES
 INSERT INTO Provee (codigo_zapato, cuit_proveedor) VALUES
 (1, '30-12345678-9'),
 (2, '27-87654321-0'),
-(3, '30-12345678-9');
+(3, '30-12345678-9'),
+(4, '27-87654321-0'),
+(5, '30-12345678-9');
 
 INSERT INTO Persona (dni, nombre, apellido, direccion) VALUES
 ('47312442', 'Juan Cruz', 'Uva Britos', 'Paul Harris 323'),
